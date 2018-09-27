@@ -66,9 +66,16 @@ it('can mark items as completed', () => {
   cy.contains('li.todo', 'simple').should('not.exist')
 })
 after('Delete all todo list', () => {
-
+  console.log("Test: " + getTodoItems().length)
+  getTodoItems().should('have.length', 7)
+  getTodoItems().then(($el) => {
+    console.log("Test: " + $el.length)
+  })
+  console.log("Test: " + getTodoItems().length)
+  cy.pause()
+  // cy.pause()
   //Get size
-  cy.get('li.todo').find('.destroy').then(($els) => {
+  getMyToDoItems().then(($els) => {
     var total = $els.length
     for (let i = 0; i < total; i++) {
       $els[i].click({
@@ -77,5 +84,12 @@ after('Delete all todo list', () => {
     }
   })
 })
+
+const getTodoApp = () => cy.get('.todoapp')
+const getTodoItems = () => getTodoApp().find('.todo-list').find('li')
+const getMyToDoItems = () => cy.get('li.todo').find('.destroy')
+// function getTodoItems() {
+//   return cy.get('li.todo').find('.destroy')
+// }
 // what a challenge?
 // test more UI at http://todomvc.com/examples/vue/
