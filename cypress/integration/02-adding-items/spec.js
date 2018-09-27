@@ -1,9 +1,13 @@
 /// <reference types="cypress" />
-it('loads', () => {
-  // application should be running at port 3000
-  cy.visit('localhost:3000')
+beforeEach('Visit Page before test', () => {
+  cy.visit('/')
   cy.contains('a', 'TodoMVC')
 })
+// it('loads', () => {
+//   // application should be running at port 3000
+//   cy.visit('localhost:3000')
+//   cy.contains('a', 'TodoMVC')
+// })
 
 it('starts with zero items', () => {
   // TODO check if the list is empty initially
@@ -61,6 +65,17 @@ it('can mark items as completed', () => {
   })
   cy.contains('li.todo', 'simple').should('not.exist')
 })
+after('Delete all todo list', () => {
 
+  //Get size
+  cy.get('li.todo').find('.destroy').then(($els) => {
+    var total = $els.length
+    for (let i = 0; i < total; i++) {
+      $els[i].click({
+        force: true
+      })
+    }
+  })
+})
 // what a challenge?
 // test more UI at http://todomvc.com/examples/vue/
