@@ -13,10 +13,29 @@ it('loads', () => {
  */
 const addItem = text => {
   // write Cy commands here to add the new item
+  cy.get('[data-cy=input]').type(`${text}{enter}`)
 }
 it('adds two items', () => {
   addItem('first item')
   addItem('second item')
   // fill the selector
-  cy.get('...').should('have.length', 2)
+  cy.get('[data-cy=todo]').should('have.length', 2)
+})
+
+after(() => {
+  // Old style to click each element
+  // cy.get('[data-cy=remove]').then(($el) => {
+  //   var total = $el.length
+  //   for (let i = 0; i < total; i++) {
+  //     $el[i].click({
+  //       force: true
+  //     })
+  //   }
+  // })
+
+  // Modern style from Cypress to click all
+  cy.get('[data-cy=remove]').click({
+    force: true,
+    multiple: true
+  })
 })

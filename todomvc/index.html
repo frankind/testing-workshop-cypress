@@ -17,15 +17,15 @@
     <header class="header">
       <h1>todos</h1>
       <input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" :value="newTodo" @input="setNewTodo"
-        @keyup.enter="addTodo">
+        @keyup.enter="addTodo" data-cy="input">
     </header>
     <section class="main" v-show="todos.length" v-cloak>
       <ul class="todo-list">
         <li v-for="todo in todos" class="todo" :key="todo.id" :class="{ completed: todo.completed }">
           <div class="view">
             <input class="toggle" type="checkbox" v-model="todo.completed">
-            <label>{{ todo.title }}</label>
-            <button class="destroy" @click="removeTodo(todo)"></button>
+            <label data-cy="todo">{{ todo.title }}</label>
+            <button class="destroy" @click="removeTodo(todo)" data-cy="remove"></button>
           </div>
         </li>
       </ul>
