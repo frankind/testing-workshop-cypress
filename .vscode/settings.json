@@ -1,4 +1,12 @@
 {
-  "editor.formatOnSave": true,
-  "standard.autoFixOnSave": true
+  "editor.formatOnSave": false,
+  "standard.autoFixOnSave": true,
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "cypress.json"
+      ],
+      "url": "https://on.cypress.io/cypress.schema.json"
+    }
+  ]
 }

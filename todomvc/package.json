@@ -7,5 +7,8 @@
     "reset": "node reset-db.js",
     "reset:db": "npm run reset",
     "reset:database": "npm run reset"
+  },
+  "dependencies": {
+    "json-server-reset": "1.0.0"
   }
 }
