@@ -1,19 +1,20 @@
 /// <reference types="cypress" />
 beforeEach('Visit Page before test', () => {
   cy.visit('/')
+})
+
+it('loads', () => {
+  // application should be running at port 300
   cy.contains('a', 'TodoMVC')
 })
-// it('loads', () => {
-//   // application should be running at port 3000
-//   cy.visit('localhost:3000')
-//   cy.contains('a', 'TodoMVC')
-// })
 
 it('starts with zero items', () => {
   // TODO check if the list is empty initially
   // find the selector for the individual TODO items in the list
   // use cy.get(...) and it should have length of 0
-  cy.get('.todo').should('have.length', 0)
+  // cy.get('input.toggle').should('have.length', 0)
+  deleteAllItem()
+  cy.get('li.todo').should('have.length', 0)
 })
 
 it('adds two items', () => {
@@ -22,14 +23,25 @@ it('adds two items', () => {
   //    type text and "enter"
   //    assert that the new Todo item
   //    has been added added to the list
-  cy.get('.new-todo').type('first item{enter}')
-  cy.contains('li.todo', 'first item').should('be.visible')
-  cy.get('.new-todo').type('second item{enter}')
-  cy.contains('li.todo', 'second item').should('be.visible')
+  cy.get('input.new-todo').type('hello{enter}')
+  // This does not work due to it in label element
+  // cy.get('li.todo').should('have.text', 'hello') 
+  cy.contains('li.todo', 'hello').should('be.visible')
+  cy.get('input.new-todo').type('hello2{enter}')
+  cy.contains('li.todo', 'hello2').should('be.visible')
+  deleteAllItem()
 })
 
-function addTodo(input) {
-  cy.get('.new-todo').type(input + '{enter}')
+const deleteAllItem = () => {
+  cy.get('.destroy').then(($el) => {
+    const items = $el.length
+    if (items >= 1) {
+      cy.get('.destroy').click({
+        multiple: true,
+        force: true
+      })
+    }
+  })
 }
 
 it('can add many items', () => {
@@ -49,6 +61,13 @@ it('can add many items', () => {
   })
 
 })
+
+const getTodoItems = () => {
+  return cy.get('li.todo')
+}
+const addItem = message => {
+  cy.get('input.new-todo').type(`${message}{enter}`)
+}
 
 it('can mark items as completed', () => {
   // add a few items
